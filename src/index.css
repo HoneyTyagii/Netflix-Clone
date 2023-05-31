@@ -2,8 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-#root{
+body{
   background: theme("colors.dark");
   color: theme("colors.white");
-  min-height: theme("height.screen");
 }
