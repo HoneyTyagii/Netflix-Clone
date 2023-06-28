@@ -41,17 +41,17 @@ export default function ContentRows({ title, endpoint}: RowProp) {
         >
             next
         </button>
-        <section
+
+
+            <section
             ref={sliderRef} 
             className="flex gap-2 transition-transform delay-700">
             {rowData?.map((row) => {
                 const { id, title, poster_path } = row;
                 console.log(row); 
                 return (
-                     <section 
-                     key={id} 
-                     className="h-[200px] w-[200px] flex-none"
-                     >
+                     <section key={id} 
+                     className="h-[200px] w-[200px] flex-none">
                         <img 
                         loading="lazy"
                         className="h-full w-full" 
