@@ -1,61 +1,122 @@
-import { useEffect, useRef, useState } from "react";
-import { ENDPOINT } from "../common/endpoints";
+import React, { useEffect, useRef, useState } from "react";
 import { MovieResponse, MovieResult, fetchRequest } from "../common/api";
+import { ENDPOINT } from "../common/endpoints";
+import ChevronLeft from "@heroicons/react/24/outline/ChevronLeftIcon";
+import ChevronRight from "@heroicons/react/24/outline/ChevronRightIcon";
 type RowProp = {
     endpoint: string;
     title: string;
 };
+const CARD_WIDTH = 200;
 export default function ContentRows({ title, endpoint}: RowProp) {
     const sliderRef = useRef<HTMLSelectElement>(null);
+    const containerRef = useRef<HTMLSelectElement>(null);
     const [rowData, setRowData] = useState<MovieResult[]>([]);
+    const [translateX, setTranslateX] = useState(0);
+    const [pagesCount, setPagesCount] = useState(0);
+    const[currentPage,setCurrentPage] = useState(0);
+    const cardsPerPage = useRef(0);
+    const disablePrev = currentPage === 0;
+    const disableNext = currentPage +1 === pagesCount;
     async function fetchRowData() {
         const response =  await fetchRequest<MovieResponse<MovieResult[]>>(
             endpoint
         );
         setRowData(response.results);
     }
-    function createImageURL(path: string) {
-        return `${import.meta.env.VITE_BASE_IMAGE_URI}/${path}`;
+    function createImageURL(path: string , width: number) {
+        return `${import.meta.env.VITE_BASE_IMAGE_URI}/w${width}/${path}`;
     }
 
     function onNextClick() {
-        if (sliderRef.current) {
-            sliderRef.current.style.transform = `translateX(-100%)`;
+        if(sliderRef.current) {
+            let updatedTranslateX = translateX - 100;
+            sliderRef.current.style.transform = `translateX(${updatedTranslateX}%)`;
+            setTranslateX(updatedTranslateX);
+            setCurrentPage(currentPage+1);
         }
     }
-    function prevClick() {}
+    function prevClick() {
+        if(sliderRef.current) {
+            let updatedTranslateX = translateX + 100;
+            sliderRef.current.style.transform = `translateX(${updatedTranslateX}%)`;
+            sliderRef.current.style.transform = `translateX(100%)`;
+            setTranslateX(updatedTranslateX);
+            setCurrentPage(currentPage-1);
+        }
+    }
+
+    function getTranslateXValue(){
+        let translateX = 0;
+        if(sliderRef.current){
+            translateX = ((cardsPerPage.current * CARD_WIDTH) / sliderRef.current.clientWidth) *100;
+        }
+    }
+
+    useEffect(() => {
+        if(rowData?.length) {
+            if(containerRef.current){
+                cardsPerPage.current = Math.floor(
+                    containerRef.current.clientWidth / CARD_WIDTH
+                );
+                setPagesCount(Math.ceil(rowData.length/cardsPerPage.current));
+            }
+        }
+    }, [rowData.length]);
+
+
     useEffect(() => {
         fetchRowData();
     }, []);
     return( 
-    <section className="">
-        <h2 className="mb-4">{title}</h2>
-        <section className="relative flex flex-nowrap gap-2 overflow-hidden">
-
-        
-        <button className="absolute h-full bg-black/25">prev</button>
-
+    <section className="row-container ml-12 hover:cursor-pointer">
+        <h2 className="mb-2">{title}</h2>
+        <ul className="mb-4 flex items-center justify-end gap-1 pr-4 opacity-0 transition-opacity duration-300 ease-in">
+            {Array(pagesCount)
+            .fill(0)
+            .map((page, index) => (
+                <li 
+                className={`h-[2px] w-3 ${
+                    currentPage === index ? "bg-gray-100" : "bg-gray-600"
+                }`}  
+                key={index}>
+                </li>
+            ))
+            }
+        </ul>
+        <section
+        ref={containerRef} 
+        className="relative flex flex-nowrap gap-2 overflow-hidden"
+        >
+        {!disablePrev ? (
+        <button className="absolute z-[1] h-full w-12 bg-black/25 opacity-0 transition-opacity duration-300 ease-in"
+        onClick={prevClick}
+        >
+            <ChevronLeft />
+            </button>
+        ) : null}
+        {!disableNext ? (
         <button 
-        className="absolute right-0 z-[1] h-full bg-black/25" 
+        className="absolute right-0 z-[1] h-full w-12 bg-black/25 opacity-0 transition-opacity duration-300 ease-in"
         onClick={onNextClick}
         >
-            next
+            <ChevronRight />
         </button>
-
+        ) : null}
 
             <section
             ref={sliderRef} 
-            className="flex gap-2 transition-transform delay-700">
+            className="flex gap-2 transition-transform duration-700">
             {rowData?.map((row) => {
                 const { id, title, poster_path } = row;
                 console.log(row); 
                 return (
                      <section key={id} 
-                     className="h-[200px] w-[200px] flex-none">
+                     className="aspect-square flex-none overflow-hidden rounded-md">
                         <img 
                         loading="lazy"
                         className="h-full w-full" 
-                        src={createImageURL(poster_path)} 
+                        src={createImageURL(poster_path, CARD_WIDTH)} 
                         alt={title} />
                      </section>
                 );
