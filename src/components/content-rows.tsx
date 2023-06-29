@@ -3,6 +3,8 @@ import { MovieResponse, MovieResult, fetchRequest } from "../common/api";
 import { ENDPOINT } from "../common/endpoints";
 import ChevronLeft from "@heroicons/react/24/outline/ChevronLeftIcon";
 import ChevronRight from "@heroicons/react/24/outline/ChevronRightIcon";
+import PageIndicator from "./page-indicator";
+import MovieCard from "./movie-card";
 type RowProp = {
     endpoint: string;
     title: string;
@@ -24,8 +26,8 @@ export default function ContentRows({ title, endpoint}: RowProp) {
         );
         setRowData(response.results);
     }
-    function createImageURL(path: string , width: number) {
-        return `${import.meta.env.VITE_BASE_IMAGE_URI}/w${width}/${path}`;
+    function createImageURL(path: string) {
+        return `${import.meta.env.VITE_BASE_IMAGE_URI}/${path}`;
     }
 
     function onNextClick() {
@@ -71,19 +73,11 @@ export default function ContentRows({ title, endpoint}: RowProp) {
     return( 
     <section className="row-container ml-12 hover:cursor-pointer">
         <h2 className="mb-2">{title}</h2>
-        <ul className="mb-4 flex items-center justify-end gap-1 pr-4 opacity-0 transition-opacity duration-300 ease-in">
-            {Array(pagesCount)
-            .fill(0)
-            .map((page, index) => (
-                <li 
-                className={`h-[2px] w-3 ${
-                    currentPage === index ? "bg-gray-100" : "bg-gray-600"
-                }`}  
-                key={index}>
-                </li>
-            ))
-            }
-        </ul>
+        <PageIndicator 
+        className="mb-4 opacity-0 transition-opacity duration-300 ease-in" 
+        pagesCount={pagesCount} 
+        currentPage={currentPage} 
+        />
         <section
         ref={containerRef} 
         className="relative flex flex-nowrap gap-2 overflow-hidden"
@@ -106,20 +100,11 @@ export default function ContentRows({ title, endpoint}: RowProp) {
 
             <section
             ref={sliderRef} 
-            className="flex gap-2 transition-transform duration-700">
+            className="flex gap-2 transition-transform duration-700 ease-linear">
             {rowData?.map((row) => {
-                const { id, title, poster_path } = row;
+
                 console.log(row); 
-                return (
-                     <section key={id} 
-                     className="aspect-square flex-none overflow-hidden rounded-md">
-                        <img 
-                        loading="lazy"
-                        className="h-full w-full" 
-                        src={createImageURL(poster_path, CARD_WIDTH)} 
-                        alt={title} />
-                     </section>
-                );
+                return <MovieCard key={row.id} {...row} />;
             })}
             </section>
         </section>
