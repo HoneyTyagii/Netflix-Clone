@@ -9,7 +9,7 @@ export default function PageIndicator({
     currentPage: number;
     className: string;
 }) {
-    return(
+    return(isFinite(pagesCount)?(
     <ul className={`flex items-center justify-end gap-1 pr-4 ${className}`}>
             {Array(pagesCount)
             .fill(0)
@@ -22,5 +22,5 @@ export default function PageIndicator({
                 </li>
             ))}
         </ul>
-    );
+    ):null);
 }

@@ -72,7 +72,7 @@ export default function ContentRows({ title, endpoint}: RowProp) {
     }, []);
     return( 
     <section className="row-container ml-12 hover:cursor-pointer">
-        <h2 className="mb-2">{title}</h2>
+        <h2 className="text-xl">{title}</h2>
         <PageIndicator 
         className="mb-4 opacity-0 transition-opacity duration-300 ease-in" 
         pagesCount={pagesCount} 
@@ -80,7 +80,7 @@ export default function ContentRows({ title, endpoint}: RowProp) {
         />
         <section
         ref={containerRef} 
-        className="relative flex flex-nowrap gap-2 overflow-hidden"
+        className="relative mb-8 flex flex-nowrap gap-2 overflow-hidden"
         >
         {!disablePrev ? (
         <button className="absolute z-[1] h-full w-12 bg-black/25 opacity-0 transition-opacity duration-300 ease-in"
@@ -102,9 +102,13 @@ export default function ContentRows({ title, endpoint}: RowProp) {
             ref={sliderRef} 
             className="flex gap-2 transition-transform duration-700 ease-linear">
             {rowData?.map((row, index) => {
-
-                console.log(row); 
-                return <MovieCard key={`${row.id}-${index}`} {...row} />;
+                return( 
+                <MovieCard
+                uid={`${row.id}-${title}`}
+                key={`${row.id}-${title}`} 
+                {...row}
+                />
+                );
             })}
             </section>
         </section>

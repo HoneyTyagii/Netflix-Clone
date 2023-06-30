@@ -2,52 +2,48 @@ import React, { useEffect, useRef, useState } from "react";
 import { createImageURL } from "../common/utils";
 import Modal from "./modal";
 import YouTube from "react-youtube";
-import { fetchRequest } from "../common/api";
+import { MovieVideoInfo, fetchRequest, fetchVideoInfo } from "../common/api";
 import { ENDPOINT } from "../common/endpoints";
 
-export type MovieVideoResult<T> = {
-    id: number
-    results: T
-    [k: string]: unknown
-  }
+import PlayIcon from "@heroicons/react/24/solid/PlayCircleIcon";
+import LikeIcon from "@heroicons/react/24/outline/HandThumbUpIcon";
+import PlusIcon from "@heroicons/react/24/outline/PlusIcon";
+import ChevronDown from "@heroicons/react/24/outline/ChevronDownIcon";
+import { Position } from "../common/types";
 
-export type MovieVidioInfo = {
-    iso_639_1: string
-    iso_3166_1: string
-    name: string
-    key: string
-    site: string
-    size: number
-    type: string
-    official: boolean
-    published_at: string
-    id: string
-    [k: string]: unknown;
-};
+
   
-
 
 type MovieCardProp = {
     poster_path:string;
     id:number;
     title: string;
-}
+    uid: string;
+};
 
-export default function MovieCard({poster_path, id, title}:MovieCardProp){
+
+export default function MovieCard({poster_path, id, title, uid}:MovieCardProp){
     const [isOpen, setIsOpen] = useState(false);
-    const [videoInfo, setVideoInfo] = useState<MovieVidioInfo | null>(null);
+    const [videoInfo, setVideoInfo] = useState<MovieVideoInfo | null>(null);
     const movieCardRef = useRef<HTMLSelectElement>(null);
-    async function fetchVideoInfo() {
-        const response = await fetchRequest<MovieVideoResult<MovieVidioInfo[]>>(
-            ENDPOINT.MOVIES_VIDEO.replace("{movie_id}", id.toString())
-        );
-        return response.results.filter(
-            (result) => result.site.toLowerCase() === "youtube"
-        );
-    }
+    const [position, setPosition] = useState<Position | null>(null);
+    const [hidePoster, setHidePoster] = useState(false);
+
+    
     async function onMouseEnter(event: any){
-        const [videoInfo] = await fetchVideoInfo();
-        console.log({videoInfo});
+        const [videoInfo] = await fetchVideoInfo(id.toString());
+        let calculatedPosition = movieCardRef.current?.getBoundingClientRect();
+        console.log({calculatedPosition});
+        let top = (calculatedPosition?.top ?? 0 )- 100;
+        let left = (calculatedPosition?.left ?? 0 ) - 100;
+        if (left < 0){
+            left = calculatedPosition?.left as number;
+        }
+        let totalWidth = left + 470;
+        if(totalWidth > document.body.clientWidth){
+            left = left - (totalWidth - document.body.clientWidth);
+        }
+        setPosition({top,left});
         setVideoInfo(videoInfo);
         setIsOpen(true);
     }
@@ -56,14 +52,28 @@ export default function MovieCard({poster_path, id, title}:MovieCardProp){
         () => movieCardRef.current?.removeEventListener("mouseenter", onMouseEnter);
     }, []);
 
-    function onClose(value:boolean){
+    useEffect(() => {
+        if (videoInfo?.key){
+            setTimeout(() => {
+                setHidePoster(true);
+            }, 800);
+        }
+        if (!isOpen){
+            setHidePoster(false);
+        }
+    },[videoInfo, isOpen]);
+
+    function onClose(value: boolean){
         setIsOpen(value);
+    }
+    function closeModal(){
+        setIsOpen(false);
     }
     return (
     <>
         <section 
         ref={movieCardRef}
-        key={id} 
+        key={uid} 
         className="h-[200px] w-[200px] flex-none"
         >
            <img 
@@ -73,10 +83,26 @@ export default function MovieCard({poster_path, id, title}:MovieCardProp){
            alt={title} 
         />
         </section>
-        <Modal title={title} isOpen={isOpen} key={id} onClose={onClose}>
+        <Modal 
+        title={""} 
+        isOpen={isOpen} 
+        key={id} 
+        onClose={onClose}
+        closeModal={closeModal} 
+        position = {position}
+        >
+            <section className="aspect-square transition-[height] duration-500 ease-in">
+                <img 
+                src={createImageURL(poster_path, 400)} 
+                alt={title} 
+                className={`${
+                    hidePoster? "invisible h-0": "visible h-full"
+                } w-full`} 
+                />
             <YouTube
             opts={{
-                width: "450",
+                width: "400",
+                height: "400",
                 playerVars: {
                     autoplay: 1,
                     playsinline: 1,
@@ -84,7 +110,37 @@ export default function MovieCard({poster_path, id, title}:MovieCardProp){
                 },
             }} 
             videoId={videoInfo?.key}
+            className={`${
+                !hidePoster ? "invisible h-0": "visible h-full"
+            } w-full`} 
             />
+            <section className="flex items-center justify-between p-6">
+                <ul className="flex items-center justify-evenly gap-4">
+                    <li className="h-12 w-12">
+                        <button className="h-full w-full">
+                            <PlayIcon></PlayIcon>
+                        </button>
+                    </li>
+                    <li className="h-12 w-12 rounded-full border-2 border-gray-500 p-2 hover:border-white">
+                        <button className="h-full w-full">
+                            <PlusIcon />
+                        </button>
+                    </li>
+                    <li className="h-12 w-12 rounded-full border-2 border-gray-500 p-2 hover:border-white">
+                        <button className="h-full w-full">
+                            <LikeIcon />
+                        </button>
+                    </li>
+                </ul>
+                <ul className="flex items-center justify-evenly gap-4">
+                    <li className="h-12 w-12 rounded-full border-2 border-gray-500 p-2 hover:border-white">
+                        <button className="h-full w-full">
+                            <ChevronDown />
+                        </button>
+                    </li>
+                </ul>
+            </section>
+            </section>
         </Modal>
     </>
    );

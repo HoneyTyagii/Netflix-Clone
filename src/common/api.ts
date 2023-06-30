@@ -1,3 +1,5 @@
+import { ENDPOINT } from "./endpoints";
+
 export type MovieResult={
   adult: boolean;
   backdrop_path: string;
@@ -24,9 +26,38 @@ export interface MovieResponse<T>{
     [k: string]: unknown;
 }
 
+export type MovieVideoResult<T> = {
+  id: number
+  results: T
+  [k: string]: unknown
+}
+
+export type MovieVideoInfo = {
+  iso_639_1: string
+  iso_3166_1: string
+  name: string
+  key: string
+  site: string
+  size: number
+  type: string
+  official: boolean
+  published_at: string
+  id: string
+  [k: string]: unknown;
+};
+
 export async function fetchRequest<T>(endpoint: string){
     const url = new URL(endpoint, import.meta.env.VITE_BASE_API);
     url.searchParams.append('api_key', import.meta.env.VITE_API_KEY);
     const response = await fetch(url);
     return response.json() as Promise<T>;
+}
+
+export async function fetchVideoInfo(id: string) {
+  const response = await fetchRequest<MovieVideoResult<MovieVideoInfo[]>>(
+      ENDPOINT.MOVIES_VIDEO.replace("{movie_id}", id)
+  );
+  return response.results.filter(
+      (result) => result.site.toLowerCase() === "youtube"
+  );
 }
