@@ -101,10 +101,10 @@ export default function ContentRows({ title, endpoint}: RowProp) {
             <section
             ref={sliderRef} 
             className="flex gap-2 transition-transform duration-700 ease-linear">
-            {rowData?.map((row) => {
+            {rowData?.map((row, index) => {
 
                 console.log(row); 
-                return <MovieCard key={row.id} {...row} />;
+                return <MovieCard key={`${row.id}-${index}`} {...row} />;
             })}
             </section>
         </section>
