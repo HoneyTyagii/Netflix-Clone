@@ -1,14 +1,14 @@
-import React, { createContext, useEffect, useReducer } from 'react'
-import { ProfilesContextType, UserProfile } from './types';
+import React, { createContext, useContext, useEffect, useReducer } from 'react'
+import { ActionType, ProfilesContextType, UserProfile } from './types';
 import { useAuth } from './auth';
+import profilesReducer from '../reducer/profilesReducer';
 
 type StoredProfiles = Map<string, ProfilesContextType>;
-
 const LOCAL_STORAGE_KEY = "profiles";
 
 const ProfilesContext = createContext<ProfilesContextType | null>(null);
 
-const ProfileDispatchContext = createContext(null);
+const ProfileDispatchContext = createContext<React.Dispatch<ActionType>| null>(null);
 
 
 export default function ProfilesProvider({
@@ -24,22 +24,38 @@ export default function ProfilesProvider({
     const [state,dispatch] = useReducer(profilesReducer,userProfiles)
 
     useEffect(() => {
+        if(user?.email){
+            if(state){
+                const storedProfiles = getProfiles();
+                storedProfiles.set(user.email, state);
+                updateProfiles(storedProfiles);
+            }else{
+                dispatch({type:"load",payload:userProfiles});
+            }
+        }
+    }, [user?.email])
 
-    }, [])
-
-    return <ProfilesContext.Provider>
-        <ProfileDispatchContext.Provider>
+    return <ProfilesContext.Provider value={state}>
+        <ProfileDispatchContext.Provider value={dispatch}>
             {children}
         </ProfileDispatchContext.Provider>
     </ProfilesContext.Provider>
     
 }
 
-function getProfiles(){
+function getProfiles():StoredProfiles{
     return new Map(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)?? "[]"));
 }
 
 function findProfile(id:string){
     const profiles = getProfiles();
-    return id ? profiles.get(id) as StoredProfiles ?? null : null;
+    return id ? profiles.get(id)  ?? null : null;
 }
+
+function updateProfiles(profiles:StoredProfiles){
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(Array.from(profiles)));
+}
+
+export const useProfilesContext = () => useContext(ProfilesContext);
+export const useProfilesDispatchContext = () => 
+useContext(ProfileDispatchContext);

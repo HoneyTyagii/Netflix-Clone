@@ -3,8 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import PencilIcon from "@heroicons/react/24/outline/PencilIcon";
 import PlusCircle from "@heroicons/react/24/solid/PlusCircleIcon";
 import Modal from './modal';
+import { useProfilesContext, useProfilesDispatchContext } from '../common/profiles-context';
+import { UserProfile } from 'firebase/auth';
+import profile from '../pages/profile';
 export default function Profiles({edit}:{edit:boolean}) {
     const [isProfileEditorOpen, setIsProfileEditorOpen] = useState(false);
+
+    const userProfiles = useProfilesContext();
+    const dispatch = useProfilesDispatchContext();
+    const [profile, setProfile] = useState<UserProfile>();
+
     const navigate = useNavigate();
     function manageProfiles(){
         navigate("/ManageProfiles");
@@ -20,8 +28,13 @@ export default function Profiles({edit}:{edit:boolean}) {
   <>
   <h1 className="mb-8 text-5xl">{heading}</h1>
   <section className="flex gap-4">
-  <ProfileCard onEditClick={openEditor} edit={edit} />
-  <ProfileCard onEditClick={openEditor} edit={edit} />
+    {
+        userProfiles?.profiles.map(profile => (
+            <ProfileCard onEditClick={openEditor} edit={edit} />
+        ))
+    }
+  
+  {/* <ProfileCard onEditClick={openEditor} edit={edit} /> */}
   <AddProfile />
   </section>
   {edit ? (
@@ -57,18 +70,38 @@ function ProfileButton({
     );
 }
 
-function ProfileCard({edit,onEditClick}:{edit:boolean, onEditClick:()=>void}){
+function ProfileCard({
+    edit,
+    onEditClick,
+    profile,
+    onProfileClick,
+}:{
+    edit:boolean, 
+    onEditClick:(profile:UserProfile)=>void;
+    onProfileClick:(profile:UserProfile)=>void;
+    profile:UserProfile
+}){
+
+    function editClick(event:React.SyntheticEvent){
+        event.stopPropagation();
+        onEditClick(profile);
+    }
+
+
+    const {id, imageUrl, name} = profile;
     return (
-    <section className="flex cursor-pointer flex-col place-items-center gap-2 text-gray-400 hover:text-white">
+    <section onClick={()=> onProfileClick(profile)} id={id} className="flex cursor-pointer flex-col place-items-center gap-2 text-gray-400 hover:text-white">
         <section className="relative h-[10vw] max-h-[200px] max-w-[200px] min-h-[84px] w-[10vw]  min-w-[84px] overflow-hidden rounded-md border-gray-100 hover:border-4">
-            <img src="/netflix-profile.png" alt="User profile image" />
+            <img src={imageUrl} alt={name} />
             {edit ? (
-            <button className="absolute inset-0 grid place-items-center bg-black/50" onClick={onEditClick}>
+            <button className="absolute inset-0 grid place-items-center bg-black/50" 
+            onClick={editClick}
+            >
                 <PencilIcon className="w-[25%] text-white" />
             </button> 
             ): null}
         </section>
-        <h1 className="text-xl">Profile name</h1>
+        <h1 className="text-xl">{name}</h1>
     </section>
     );
 }

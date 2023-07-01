@@ -12,6 +12,7 @@ import Login from './pages/login';
 import { AuthProvider, useAuth } from './common/auth';
 import Profile from './pages/profile';
 import { useEffect, useState } from 'react';
+import ProfilesProvider from './common/profiles-context';
 
 function ProtectedRoute({children}:{children:React.ReactElement}){
   const {user} = useAuth();
@@ -62,7 +63,9 @@ function AppRouter(){
 export default function App() {
   return (
     <AuthProvider>
-      <AppRouter />
+      <ProfilesProvider>
+        <AppRouter />
+      </ProfilesProvider>
     </AuthProvider>
   );
 } 
