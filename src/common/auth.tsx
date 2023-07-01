@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 import {User, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut} from "firebase/auth"
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -20,6 +20,19 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
+
+export type AuthContextType = ReturnType<typeof useProvideAuth>;
+
+const AuthContext = createContext<AuthContextType | null>(null);
+
+export const AuthProvider = ({
+  children,
+}:{
+  children:React.ReactElement|React.ReactElement[];
+}) =>{
+    const auth = useProvideAuth();
+    return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
+};
 
 function useProvideAuth(){
     const [user, setUser] = useState<User|null>(null);
@@ -54,3 +67,5 @@ function useProvideAuth(){
         user
     }
 }
+
+export const useAuth = () => useContext(AuthContext) ?? {} as AuthContextType ;

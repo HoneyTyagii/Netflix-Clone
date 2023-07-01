@@ -1,10 +1,20 @@
 import React, { FormEvent } from 'react'
 import netflixLogo from "../assets/Netflix_Logo_RGB.png";
+import { AuthContextType, useAuth } from '../common/auth';
+import { useNavigate } from 'react-router-dom';
 export default function login() {
-    function signIn(event: FormEvent) { 
-        const {email,password} = event.target as any;
+  const {signIn} = useAuth();
+  const navigate = useNavigate();
+    async function authenticateUser(event: React.SyntheticEvent) { 
+        const {email,password} = event.target as typeof event.target & {
+          email: HTMLInputElement, 
+          password: HTMLInputElement
+        };
         event.preventDefault();
-        console.log(email.value, password.value);
+        const user = await signIn(email.value, password.value);
+        if(user){
+          navigate("/");
+        }
     }
   return (
   <>
@@ -15,7 +25,10 @@ export default function login() {
     <section className={`absolute top-0 -z-[1] w-full min-h-screen bg-[url("/netflix-cover.jpg")] bg-cover `}>
     </section>
     <section className="absolute inset-0 bg-gradient-to-b from-zinc-900/50"></section>
-    <form onSubmit={signIn} className="relative mx-auto min-h-[70vh] w-[450px] rounded-r-lg bg-black/75 p-16">
+    <form 
+    onSubmit={authenticateUser} 
+    className="relative mx-auto min-h-[70vh] w-[450px] rounded-r-lg bg-black/75 p-16"
+    >
         <article>
             <h1 className="mb-4 text-4xl">Sign In</h1>
             <section className="flex flex-col gap-4">
