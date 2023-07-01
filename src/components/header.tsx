@@ -5,6 +5,7 @@ import { Link, NavLink } from "react-router-dom";
 import netflixLogo from "../assets/Netflix_Logo_RGB.png";
 import NotificationIcon from "@heroicons/react/24/outline/BellIcon";
 import SearchBar from "./search-bar";
+import ProfileMenu from "./profile-menu";
 export default function Header(){
     const [fixed, setFixed] = useState(false);
     function isActiveLink({isActive} : {isActive: boolean}) {
@@ -62,7 +63,7 @@ export default function Header(){
                 <section className="flex items-center gap-4 justify-self-end">
                     <SearchBar />
                     <NotificationIcon className="h-8 w-8" />
-                    Profile
+                    <ProfileMenu />
                 </section>
             </nav>
         </header>

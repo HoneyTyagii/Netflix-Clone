@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        dark: "hsl(0deg 0% 8%)"
+        dark: "hsl(0deg 0% 8%)",
+        netflixRed: "#e50a14"
       },
       animation: {
         "slide-rtl": "slide-rtl .4s ease-in-out"

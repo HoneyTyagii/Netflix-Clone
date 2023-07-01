@@ -6,13 +6,14 @@ import {
 } from 'react-router-dom';
 import Layout from './components/layout';
 import Browse from './pages/browse';
+import Login from './pages/login';
 
 function AppRouter(){
   const router =  createBrowserRouter(
     createRoutesFromElements(
       <>
         <Route path="/" element={<h1>default view</h1>} />
-        <Route path="/login" element={<h1>login</h1>} />
+        <Route path="/login" element={<Login/>} />
         <Route path="/browse" element={<Layout />} >
           <Route index element={<Browse />} />
         </Route>
