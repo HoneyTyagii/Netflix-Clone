@@ -8,6 +8,15 @@ export default {
     extend: {
       colors: {
         dark: "hsl(0deg 0% 8%)"
+      },
+      animation: {
+        "slide-rtl": "slide-rtl .4s ease-in-out"
+      },
+      keyframes: {
+        "slide-rtl": {
+          from: { "margin-right": "-90%" },
+          to: { "margin-right": "0%" },
+        }
       }
     },
   },
