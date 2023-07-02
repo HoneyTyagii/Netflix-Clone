@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import  { useEffect, useRef, useState } from "react";
 import SearchIcon from "@heroicons/react/24/outline/MagnifyingGlassIcon";
 
 export default function SeacrhBar(){

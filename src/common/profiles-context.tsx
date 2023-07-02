@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useReducer } from "react"
-import { ActionType, ProfilesContextType, UserProfile } from "./types";
+import { ActionType, ProfilesContextType } from "./types";
 import { useAuth } from "./auth";
 import profilesReducer from "../reducer/profilesReducer";
 

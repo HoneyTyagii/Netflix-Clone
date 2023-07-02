@@ -1,4 +1,3 @@
-import React,{ useEffect } from "react";
 import { ENDPOINT } from "../common/endpoints";
 import Banner from "../components/Banner";
 import ContentRows from "../components/content-rows";

@@ -3,7 +3,7 @@ import netflixLogo from "../assets/Netflix_Logo_RGB.png";
 import { useAuth } from "../common/auth";
 import { Link, useNavigate } from "react-router-dom";
 export default function Registration() {
-  const {signUp, user} = useAuth();
+  const {signUp} = useAuth();
   const navigate = useNavigate();
 
     async function registerUser(event: React.SyntheticEvent) { 

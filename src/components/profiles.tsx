@@ -5,7 +5,6 @@ import PlusCircle from "@heroicons/react/24/solid/PlusCircleIcon";
 import Modal from "./modal";
 import { useProfilesContext, useProfilesDispatchContext } from "../common/profiles-context";
 import { UserProfile } from "firebase/auth";
-import profile from "../pages/profile";
 import { ActionType } from "../common/types";
 export default function Profiles({edit}:{edit:boolean}) {
     const [isProfileEditorOpen, setIsProfileEditorOpen] = useState(false);

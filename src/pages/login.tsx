@@ -1,6 +1,6 @@
-import React, { FormEvent, useEffect } from "react";
+import React, { useEffect } from "react";
 import netflixLogo from "../assets/Netflix_Logo_RGB.png";
-import { AuthContextType, useAuth } from "../common/auth";
+import { useAuth } from "../common/auth";
 import { Link, useNavigate } from "react-router-dom";
 export default function Login() {
   const {signIn, user} = useAuth();

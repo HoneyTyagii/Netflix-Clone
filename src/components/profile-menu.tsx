@@ -1,6 +1,6 @@
 import ChevronDownIcon from "@heroicons/react/24/outline/ChevronDownIcon";
-import React, { useEffect, useRef, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import  { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../common/auth";
 import { 
     useProfilesContext, 

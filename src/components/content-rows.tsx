@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MovieResponse, MovieResult, fetchRequest } from "../common/api";
-import { ENDPOINT } from "../common/endpoints";
 import ChevronLeft from "@heroicons/react/24/outline/ChevronLeftIcon";
 import ChevronRight from "@heroicons/react/24/outline/ChevronRightIcon";
 import PageIndicator from "./page-indicator";
