@@ -1,3 +1,4 @@
+import React from "react";
 import { 
   createBrowserRouter, 
   createRoutesFromElements,
@@ -12,7 +13,7 @@ import Browse from "./pages/browse";
 import Login from "./pages/login";
 import { AuthProvider, useAuth } from "./common/auth";
 import Profile from "./pages/profile";
-import { useEffect, useState } from "react";
+import Registration from "./pages/registration";
 
 function ProtectedRoute({children}:{children:React.ReactElement}){
   const {user,loading} = useAuth();
@@ -45,6 +46,7 @@ function AppRouter(){
         </Route>
         </Route>
         <Route path="/login" element={<Login/>} />
+        <Route path="/signUp" element={<Registration/>} />
       </>
     )
   );
