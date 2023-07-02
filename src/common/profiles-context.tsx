@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useEffect, useReducer } from 'react'
-import { ActionType, ProfilesContextType, UserProfile } from './types';
-import { useAuth } from './auth';
-import profilesReducer from '../reducer/profilesReducer';
+import React, { createContext, useContext, useEffect, useReducer } from "react"
+import { ActionType, ProfilesContextType, UserProfile } from "./types";
+import { useAuth } from "./auth";
+import profilesReducer from "../reducer/profilesReducer";
 
 type StoredProfiles = Map<string, ProfilesContextType>;
 const LOCAL_STORAGE_KEY = "profiles";
@@ -33,7 +33,7 @@ export default function ProfilesProvider({
                 dispatch({type:"load",payload:userProfiles});
             }
         }
-    }, [user?.email])
+    }, [user?.email,state])
 
     return <ProfilesContext.Provider value={state}>
         <ProfileDispatchContext.Provider value={dispatch}>
@@ -58,4 +58,4 @@ function updateProfiles(profiles:StoredProfiles){
 
 export const useProfilesContext = () => useContext(ProfilesContext);
 export const useProfilesDispatchContext = () => 
-useContext(ProfileDispatchContext);
+useContext(ProfileDispatchContext) as React.Dispatch<ActionType> ;

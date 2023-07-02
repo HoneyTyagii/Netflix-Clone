@@ -1,7 +1,7 @@
-import React, { FormEvent } from 'react'
+import React, { FormEvent } from "react";
 import netflixLogo from "../assets/Netflix_Logo_RGB.png";
-import { AuthContextType, useAuth } from '../common/auth';
-import { useNavigate } from 'react-router-dom';
+import { AuthContextType, useAuth } from "../common/auth";
+import { useNavigate } from "react-router-dom";
 export default function login() {
   const {signIn} = useAuth();
   const navigate = useNavigate();
@@ -33,18 +33,18 @@ export default function login() {
             <h1 className="mb-4 text-4xl">Sign In</h1>
             <section className="flex flex-col gap-4">
                 <input 
-                className="rounded-md bg-zinc-500 p-2 text-gray-300"
+                className="rounded-md bg-zinc-500 p-2 text-gray-300 outline-none"
                 type="email" 
                 name="email" 
                 id="email" 
                 />
                 <input 
-                className="rounded-md bg-zinc-500 p-2 text-gray-300"
+                className="rounded-md bg-zinc-500 p-2 text-gray-300 outline-none"
                 type="password" 
                 name="password" 
                 id="password" 
                 />
-                <button className="my-8 rounded-md p-2 font-semibold bg-netflixRed">Sign In</button>
+                <button className="my-8 rounded-md p-2 font-semibold bg-netflixRed outline-none">Sign In</button>
             </section>
             <p>New to Netflix? Sign up now.</p>
         </article>

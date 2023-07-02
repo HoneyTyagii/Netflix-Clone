@@ -34,38 +34,42 @@ export const AuthProvider = ({
     return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
 };
 
+export const useAuth = () => useContext(AuthContext) ?? {} as AuthContextType ;
+
 function useProvideAuth(){
-    const [user, setUser] = useState<User|null>(null);
+  // current user => null
+  // 1. firebase is still fetching the information. async operation
+  // 2. when the user is logged out
+  //user is logged in => User
+    const [user, setUser] = useState<User|null>(auth.currentUser);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, (user) =>{
-        user ? setUser(user) : setUser(null);
-      })
-    
+        setLoading(false);
+        setUser(user);
+      });
       return () => {
         unsubscribe();
       }
     }, []);
     
 
-    const signUp = (email:string, password:string) => createUserWithEmailAndPassword(auth, email, password).then(({user})=>{
-        setUser(user);
+    const signUp = (email:string, password:string) => createUserWithEmailAndPassword(auth, email, password).then(({ user })=>{
         return user;
     });
 
-    const signIn = (email:string, password:string)=> signInWithEmailAndPassword(auth,email,password).then(({user})=>{
-        setUser(user);
+    const signIn = (email:string, password:string)=> signInWithEmailAndPassword(auth,email,password).then(({ user })=>{
         return user;
     });
 
-    const signOutUser = signOut(auth).then(()=> setUser(null));
+    const signOutUser = ()=>signOut(auth);
 
     return {
         signUp,
         signIn,
         signOut: signOutUser,
-        user
-    }
+        user,
+        loading,
+    };
 }
-
-export const useAuth = () => useContext(AuthContext) ?? {} as AuthContextType ;

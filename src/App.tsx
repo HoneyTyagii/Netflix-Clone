@@ -5,33 +5,25 @@ import {
   Outlet,
   Route, 
   RouterProvider,
-} from 'react-router-dom';
-import Layout from './components/layout';
-import Browse from './pages/browse';
-import Login from './pages/login';
-import { AuthProvider, useAuth } from './common/auth';
-import Profile from './pages/profile';
-import { useEffect, useState } from 'react';
-import ProfilesProvider from './common/profiles-context';
+} from "react-router-dom";
+import ProfilesProvider from "./common/profiles-context";
+import Layout from "./components/layout";
+import Browse from "./pages/browse";
+import Login from "./pages/login";
+import { AuthProvider, useAuth } from "./common/auth";
+import Profile from "./pages/profile";
+import { useEffect, useState } from "react";
 
 function ProtectedRoute({children}:{children:React.ReactElement}){
-  const {user} = useAuth();
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // useEffect(() => {
-  //   if(user){
-  //     setIsLoggedIn(true);
-  //   } else{
-  //     setIsLoggedIn(false);
-  //   }
-  // }, [user]);
-
-  // if(!isLoggedIn){
-  //   return <Navigate to="/login" />
-  // }
+  const {user,loading} = useAuth();
+  
+  if(!user && !loading){
+    return <Navigate to="/login" />
+  }
   return children;
 }
-
 function AppRouter(){
+  const {loading, user} = useAuth();
   const router =  createBrowserRouter(
     createRoutesFromElements(
       <>
@@ -57,7 +49,13 @@ function AppRouter(){
     )
   );
 
-  return <RouterProvider router={router}></RouterProvider>
+  return loading && !user ? (
+  <section className="grid h-screen w-screen place-items-center text-6xl">
+    Loading...
+  </section>
+  ):(
+  <RouterProvider router={router}></RouterProvider>
+  );
 }
 
 export default function App() {
