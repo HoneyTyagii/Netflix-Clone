@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { MovieResponse, MovieResult, MovieVideoInfo, fetchRequest, fetchVideoInfo } from "../common/api";
 import { ENDPOINT } from "../common/endpoints";
 import { createImageURL } from "../common/utils";
 import YouTube, {YouTubeEvent, YouTubeProps} from "react-youtube";
-import PlayCircleIcon from "@heroicons/react/24/solid/PlayIcon";
 import Info from "@heroicons/react/24/outline/InformationCircleIcon";
 import PlayIcon from "@heroicons/react/24/solid/PlayIcon";
+import Loader from "./loader";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export default function () {
@@ -40,7 +40,7 @@ export default function () {
         setVideoInfo(videoInfo[0]);
         setTimeout(() => {
             setHidePost(true);
-        },800);
+        },1000);
 
     }
 
@@ -88,16 +88,16 @@ export default function () {
             <h2 className="text-6xl">{randomMovie.title}</h2>
             <p className="text-sm line-clamp-3">{randomMovie.overview}</p>
             <section className="flex gap-2">
-                <button className="flex w-[100px] items-center rounded-md bg-white p-2 text-dark">
+                <button className="flex w-[100px] items-center rounded-md bg-white p-2 text-dark justify-center">
                     <PlayIcon className="h-8 w-8" /> 
                     <span>Play</span>
                 </button>
-                <button className="flex w-[150px] rounded-md bg-zinc-400/50 p-2 text-white">
+                <button className="flex w-[150px] rounded-md bg-zinc-400/50 p-2 text-white justify-center">
                     <Info className="h-8 w-8" /> 
                     <span>More Info</span>
                 </button>
             </section>
         </section>
     </section>
-    ) : null ;
+    ) : <Loader /> ;
 }

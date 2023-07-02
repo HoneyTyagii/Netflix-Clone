@@ -54,8 +54,8 @@ export default function ProfileMenu(){
 
     function loadProfile(profile:UserProfile){
         dispatch({type:"current",payload:profile});
-        navigate("/browse");    
-        // window.location.reload(); //relaod whole page
+        // navigate("/browse");    
+        window.location.reload(); //relaod whole page
     }
 
     return (

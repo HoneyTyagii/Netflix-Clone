@@ -55,7 +55,7 @@ export default function Login() {
             <p>
               New to Netflix?{" "} 
               <Link className="text-white" to="/signup">
-                Sign up now
+                Sign up now.
               </Link>
             </p>
         </article>

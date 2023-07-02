@@ -2,6 +2,7 @@ import React from "react";
 import { 
   createBrowserRouter, 
   createRoutesFromElements,
+  Link,
   Navigate,
   Outlet,
   Route, 
@@ -14,6 +15,7 @@ import Login from "./pages/login";
 import { AuthProvider, useAuth } from "./common/auth";
 import Profile from "./pages/profile";
 import Registration from "./pages/registration";
+import Loader from "./components/loader";
 
 function ProtectedRoute({children}:{children:React.ReactElement}){
   const {user,loading} = useAuth();
@@ -23,8 +25,21 @@ function ProtectedRoute({children}:{children:React.ReactElement}){
   }
   return children;
 }
+
+function RouteError(){
+  return (
+  <article className="grid place-content-center gap-2 p-4">
+    <h1 className="text-4xl">The page you're looking for doesn't exist.</h1>
+    <p className="text-2xl">
+      {" "}
+       Browse more content{" "} 
+       <Link className="text-netflixRed" to="/browse">here</Link></p>
+  </article>
+  );
+}
+
 function AppRouter(){
-  const {loading, user} = useAuth();
+  const {loading} = useAuth();
   const router =  createBrowserRouter(
     createRoutesFromElements(
       <>
@@ -35,6 +50,7 @@ function AppRouter(){
             <Outlet/>
           </ProtectedRoute>
         } 
+        errorElement={<RouteError/>}
         >
           <Route index element={<Profile/>} />
           <Route path="ManageProfiles" element={<Profile edit/>} />
@@ -51,10 +67,8 @@ function AppRouter(){
     )
   );
 
-  return loading && !user ? (
-  <section className="grid h-screen w-screen place-items-center text-6xl">
-    Loading...
-  </section>
+  return loading ? (
+    <Loader />
   ):(
   <RouterProvider router={router}></RouterProvider>
   );

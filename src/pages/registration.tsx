@@ -48,9 +48,9 @@ export default function Registration() {
                 <button className="my-8 rounded-md p-2 font-semibold bg-netflixRed text-white outline-none">Sign Up</button>
             </section>
             <p>
-              Already have an account{" "} 
+              Already have an account?{" "} 
               <Link className="text-white" to="/login">
-                Sign in now
+                Sign in now.
               </Link>
             </p>
         </article>
