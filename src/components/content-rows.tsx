@@ -24,7 +24,7 @@ export default function ContentRows({ title, endpoint}: RowProp) {
         const response =  await fetchRequest<MovieResponse<MovieResult[]>>(
             endpoint
         );
-        setRowData(response.results);
+        setRowData(response.results.filter((res)=>res.poster_path));
     }
     function createImageURL(path: string) {
         return `${import.meta.env.VITE_BASE_IMAGE_URI}/${path}`;

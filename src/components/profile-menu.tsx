@@ -48,6 +48,7 @@ export default function ProfileMenu(){
 
     async function signOutOfNetflix(){
         await signOut();
+        dispatch({ type: "load", payload: null });
         navigate("/login");
     }
 
@@ -91,8 +92,8 @@ export default function ProfileMenu(){
                 </li>
                 ))}
                 <li 
-                className=
-                {userProfiles?.profiles.length??0 > 1 
+                className={
+                    (userProfiles?.profiles.length??0) > 1 
                     ? "-mx-4 border-t border-t-gray-500 px-4 pt-2"
                     : ""
                 }

@@ -52,6 +52,11 @@ const navigate = useNavigate();
         setIsProfileEditorOpen(false);
     }
 
+    function onDeleteProfile(profile:UserProfile){
+        dispatch({type:"delete",payload:profile});
+        setIsProfileEditorOpen(false);
+    }
+
     const heading = !edit? "Who's watching?":"Manage profiles:";
   return (
   <>
@@ -59,13 +64,16 @@ const navigate = useNavigate();
   <section className="flex gap-4">
     {userProfiles?.profiles?.map((profile) => (
             <ProfileCard 
+            key={profile.id}
             onProfileClick={onProfileClick} 
             profile={profile as UserProfile} 
             onEditClick={onEditProfile} 
             edit={edit} 
             />
         ))}
-  <AddProfile onAddProfile={onAddProfile} />
+  {(userProfiles?.profiles.length ?? 0) < 3 ? (
+    <AddProfile onAddProfile={onAddProfile} />
+    ) : null   }
   </section>
   {profile ? (
   <EditProfile 
@@ -75,6 +83,7 @@ const navigate = useNavigate();
   onClose={closeEditor}  
   profile={profile}
   onSave={onSaveProfile}
+  onDelete={onDeleteProfile}
   />
   ) : null}
   {edit ? (
@@ -171,6 +180,7 @@ function EditProfile(props:{
     edit?: boolean;
     profile: UserProfile;
     onSave?:(profile:UserProfile)=>void;
+    onDelete:(profile:UserProfile)=>void;
 }){
     const heading = props.profile.id ? "Edit Profile":"Add Profile";
 function cancelEdit(){
@@ -212,6 +222,13 @@ function onSubmit(event:React.FormEvent){
                 </section>
                 <section className="mt-8 flex gap-4">
                     <ProfileButton type="submit">Save</ProfileButton>
+                    {props.profile.id ? (
+                        <ProfileButton buttonType="secondary" type="button"
+                        onClick={()=>props.onDelete(props.profile)}
+                        >
+                            Delete Profile
+                        </ProfileButton>
+                    ) : null}
                     <ProfileButton 
                     type="button" 
                     buttonType="secondary" 
