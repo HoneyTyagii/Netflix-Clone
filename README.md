@@ -77,6 +77,8 @@ Switch to another Profiles,Manage and Edit Profiles.
 
 4. Firebase (Authentication and Firestore)
 
+---
+
 ## Contributing
 
 I welcome contributions to the Netflix Clone project. If you would like to contribute, please fork the repository and submit a pull request.
