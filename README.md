@@ -10,6 +10,11 @@
 
 ![image](https://github.com/HoneyTyagii/Netflix-Clone/assets/78690656/02493a58-2a3d-4f8c-903f-17556a334265)
 
+---
+
+![image](https://github.com/HoneyTyagii/Netflix-Clone/assets/78690656/c218d4ee-819e-4be2-82cf-dc5785b4c0a7)
+
+
 <p align="center"><strong>Sign In-Page</strong></p>
 
 ![image](https://github.com/HoneyTyagii/Netflix-Clone/assets/78690656/5cd942af-2885-478c-b883-a6a5e542ed2c)
