@@ -51,7 +51,7 @@ Navigate to the project directory: cd Netflix-Clone
 
 Install dependencies: `npm install`
 
-Start the development server: `pnpm run.dev`
+Start the development server: `pnpm dev`
 
 Create a TMDB API key by signing up at https://www.themoviedb.org/
 
