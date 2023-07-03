@@ -8,11 +8,16 @@
 
 ![Home-Page](https://github.com/HoneyTyagii/Netflix-Clone/assets/78690656/49adfb34-ed3a-4ed9-ab9a-365fd7f2fcf4)
 
-![image](https://github.com/HoneyTyagii/Netflix-Clone/assets/78690656/02493a58-2a3d-4f8c-903f-17556a334265)
-
 ---
 
 ![image](https://github.com/HoneyTyagii/Netflix-Clone/assets/78690656/c218d4ee-819e-4be2-82cf-dc5785b4c0a7)
+
+---
+
+
+![image](https://github.com/HoneyTyagii/Netflix-Clone/assets/78690656/02493a58-2a3d-4f8c-903f-17556a334265)
+
+---
 
 
 <p align="center"><strong>Sign In-Page</strong></p>
