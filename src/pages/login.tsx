@@ -10,7 +10,7 @@ export default function Login() {
     if (user) {
       navigate("/");
     }
-  }, [user]);
+  }, [navigate, user]);
 
     async function authenticateUser(event: React.SyntheticEvent) { 
       event.preventDefault();

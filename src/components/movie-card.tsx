@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createImageURL } from "../common/utils";
 import Modal from "./modal";
 import YouTube from "react-youtube";
-import { MovieVideoInfo, fetchRequest, fetchVideoInfo } from "../common/api";
-import { ENDPOINT } from "../common/endpoints";
+import { MovieVideoInfo, fetchVideoInfo } from "../common/api";
+// import { ENDPOINT } from "../common/endpoints";
 
 import PlayIcon from "@heroicons/react/24/solid/PlayCircleIcon";
 import LikeIcon from "@heroicons/react/24/outline/HandThumbUpIcon";
@@ -30,16 +30,16 @@ export default function MovieCard({poster_path, id, title, uid}:MovieCardProp){
     const [hidePoster, setHidePoster] = useState(false);
 
     
-    async function onMouseEnter(event: any){
+    async function onMouseEnter(){
         const [videoInfo] = await fetchVideoInfo(id.toString());
-        let calculatedPosition = movieCardRef.current?.getBoundingClientRect();
+        const calculatedPosition = movieCardRef.current?.getBoundingClientRect();
         console.log({calculatedPosition});
-        let top = (calculatedPosition?.top ?? 0 )- 100;
+        const top = (calculatedPosition?.top ?? 0 )- 100;
         let left = (calculatedPosition?.left ?? 0 ) - 100;
         if (left < 0){
             left = calculatedPosition?.left as number;
         }
-        let totalWidth = left + 470;
+        const totalWidth = left + 470;
         if(totalWidth > document.body.clientWidth){
             left = left - (totalWidth - document.body.clientWidth);
         }
@@ -50,6 +50,7 @@ export default function MovieCard({poster_path, id, title, uid}:MovieCardProp){
     useEffect(() => {
         movieCardRef.current?.addEventListener("mouseenter", onMouseEnter);
         () => movieCardRef.current?.removeEventListener("mouseenter", onMouseEnter);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -93,7 +94,7 @@ export default function MovieCard({poster_path, id, title, uid}:MovieCardProp){
         >
             <section className="aspect-square transition-[height] duration-500 ease-in">
                 <img 
-                src={createImageURL(poster_path, 400)} 
+                src={createImageURL(poster_path)} 
                 alt={title} 
                 className={`${
                     hidePoster? "invisible h-0": "visible h-full"

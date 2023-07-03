@@ -31,7 +31,7 @@ export default function profilesReducer(state: ProfilesContextType, action: Acti
     }
     case "delete": {
       if (state) {
-        let updatedState = { ...state };
+        const updatedState = { ...state };
         updatedState.profiles = updatedState.profiles.filter((profile) => profile.id !== payload.id);
         return updatedState;
       }

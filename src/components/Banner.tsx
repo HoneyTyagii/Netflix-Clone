@@ -46,6 +46,7 @@ export default function () {
 
     useEffect(() => {
         fetchPopularMovies();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     function onStateChange(event: YouTubeEvent<number>){
@@ -64,8 +65,8 @@ export default function () {
         <img 
         src={createImageURL(
             randomMovie?.backdrop_path as string, 
-            0,
-            "original"
+            // 0,
+            // "original",
         )} 
         alt={randomMovie?.title} 
         className = {hidePoster? `h-0 invisible`: `h-full w-full visible`}

@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 
 export default function PageIndicator({
     pagesCount,
@@ -13,7 +13,7 @@ export default function PageIndicator({
     <ul className={`flex items-center justify-end gap-1 pr-4 ${className}`}>
             {Array(pagesCount)
             .fill(0)
-            .map((page, index) => (
+            .map((_page, index) => (
                 <li 
                 className={`h-[2px] w-3 ${
                     currentPage === index ? "bg-gray-100" : "bg-gray-600"

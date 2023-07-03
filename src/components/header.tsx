@@ -56,7 +56,7 @@ export default function Header(){
                         </li>
 
                         <li>
-                            <NavLink className={isActiveLink} to="/latest">New & Popular</NavLink>
+                            <NavLink className={isActiveLink} to="/latest/genre">New & Popular</NavLink>
                         </li>
                     </ul>
                 </section>

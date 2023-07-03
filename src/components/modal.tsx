@@ -1,6 +1,6 @@
-import React, { Children, LegacyRef, ReactElement, useEffect, useRef } from "react";
+import React, { ReactElement, useRef } from "react";
 
-import { useState, Fragment } from 'react'
+import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Position } from "../common/types";
 

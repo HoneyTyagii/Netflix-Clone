@@ -25,13 +25,10 @@ export default function ContentRows({ title, endpoint}: RowProp) {
         );
         setRowData(response.results.filter((res)=>res.poster_path));
     }
-    function createImageURL(path: string) {
-        return `${import.meta.env.VITE_BASE_IMAGE_URI}/${path}`;
-    }
 
     function onNextClick() {
         if(sliderRef.current) {
-            let updatedTranslateX = translateX - 100;
+            const updatedTranslateX = translateX - 100;
             sliderRef.current.style.transform = `translateX(${updatedTranslateX}%)`;
             setTranslateX(updatedTranslateX);
             setCurrentPage(currentPage+1);
@@ -39,7 +36,7 @@ export default function ContentRows({ title, endpoint}: RowProp) {
     }
     function prevClick() {
         if(sliderRef.current) {
-            let updatedTranslateX = translateX + 100;
+            const updatedTranslateX = translateX + 100;
             sliderRef.current.style.transform = `translateX(${updatedTranslateX}%)`;
             sliderRef.current.style.transform = `translateX(100%)`;
             setTranslateX(updatedTranslateX);
@@ -47,12 +44,6 @@ export default function ContentRows({ title, endpoint}: RowProp) {
         }
     }
 
-    function getTranslateXValue(){
-        let translateX = 0;
-        if(sliderRef.current){
-            translateX = ((cardsPerPage.current * CARD_WIDTH) / sliderRef.current.clientWidth) *100;
-        }
-    }
 
     useEffect(() => {
         if(rowData?.length) {
@@ -68,6 +59,7 @@ export default function ContentRows({ title, endpoint}: RowProp) {
 
     useEffect(() => {
         fetchRowData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return( 
     <section className="row-container ml-12 hover:cursor-pointer">
@@ -100,7 +92,7 @@ export default function ContentRows({ title, endpoint}: RowProp) {
             <section
             ref={sliderRef} 
             className="flex gap-2 transition-transform duration-700 ease-linear">
-            {rowData?.map((row, index) => {
+            {rowData?.map((row) => {
                 return( 
                 <MovieCard
                 uid={`${row.id}-${title}`}

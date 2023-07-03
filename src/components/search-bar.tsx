@@ -1,3 +1,4 @@
+import React from "react";
 import  { useEffect, useRef, useState } from "react";
 import SearchIcon from "@heroicons/react/24/outline/MagnifyingGlassIcon";
 
@@ -10,7 +11,7 @@ export default function SeacrhBar(){
             setOpen(false);
         }
     }
-    function toogleSearch(event: MouseEvent<HTMLButtonElement>) {
+    function toogleSearch(event: React.MouseEvent<HTMLButtonElement>) {
         event.stopPropagation();
         if (!open){
             inputRef.current?.focus();

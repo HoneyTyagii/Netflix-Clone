@@ -33,6 +33,7 @@ export default function ProfilesProvider({
                 dispatch({type:"load",payload:userProfiles});
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user?.email,state])
 
     return <ProfilesContext.Provider value={state}>
@@ -56,6 +57,8 @@ function updateProfiles(profiles:StoredProfiles){
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(Array.from(profiles)));
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useProfilesContext = () => useContext(ProfilesContext);
+// eslint-disable-next-line react-refresh/only-export-components
 export const useProfilesDispatchContext = () => 
 useContext(ProfileDispatchContext) as React.Dispatch<ActionType> ;
