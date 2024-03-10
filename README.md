@@ -24,21 +24,45 @@
 
 ![image](https://github.com/HoneyTyagii/Netflix-Clone/assets/78690656/5cd942af-2885-478c-b883-a6a5e542ed2c)
 
+---
+
 <p align="center"><strong>Sign Up-Page</strong></p>
 
 ![image](https://github.com/HoneyTyagii/Netflix-Clone/assets/78690656/693578e4-ff53-4e37-9d0e-8249a351a4d6)
+
+---
+
+
+<p align="center"><strong>Who's Watching? Add your Profile</strong></p>
+
+
+![image](https://github.com/HoneyTyagii/Netflix-Clone/assets/78690656/cc3cff58-c9dd-4eaf-86ef-8949ceea4ea9)
+
+---
+
+
+<p align="center"><strong>Add Profile</strong></p>
+
+![image](https://github.com/HoneyTyagii/Netflix-Clone/assets/78690656/7da05871-7049-4ad0-a72f-a4c4e9ad3574)
+
+---
+
 
 <p align="center"><strong>Select Profiles</strong></p>
 
 ![image](https://github.com/HoneyTyagii/Netflix-Clone/assets/78690656/339bc865-459d-408b-a80b-a7f47fd9d134)
 
+---
+
 <p align="center"><strong>Manage Profiles</strong></p>
 
 ![image](https://github.com/HoneyTyagii/Netflix-Clone/assets/78690656/1dab37e3-cc41-4f3e-bb45-a2d3b4deac01)
 
+---
+
 <p align="center"><strong>Edit Profile</strong></p>
 
-![image](https://github.com/HoneyTyagii/Netflix-Clone/assets/78690656/4bb61bde-4dc8-4022-8cb4-7d42bd64dedd)
+![image](https://github.com/HoneyTyagii/Netflix-Clone/assets/78690656/621aae94-120b-440b-b1a0-139038b76e1e)
 
 ---
 
